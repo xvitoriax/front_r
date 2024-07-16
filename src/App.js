@@ -12,9 +12,10 @@ import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import { logout } from "./slices/auth";
-import {EventDetail, EventForm, EventList} from "./components/Event";
+import { EventDetail, EventForm, EventList } from "./components/Event";
+import { CompraDetail, CompraForm, CompraList } from "./components/Compra";
 import EventBus from "./common/EventBus";
-
+import Card from "./components/Home";
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -91,7 +92,13 @@ const App = () => {
               </li>
             )}
 
-
+            {currentUser && (
+              <li className="nav-item">
+                <Link to={"/compras"} className="nav-link">
+                  Compras
+                </Link>
+              </li>
+            )}
           </div>
 
           {currentUser ? (
@@ -127,17 +134,23 @@ const App = () => {
         <div className="container mt-3">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/home" element={<Card />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/user" element={<BoardUser />} />
             <Route path="/mod" element={<BoardModerator />} />
             <Route path="/admin" element={<BoardAdmin />} />
-            <Route path="/events" element={<EventList/>} />
-            <Route path="/events/new" element={<EventForm/>} />
-            <Route path="/events/:eventId" element={<EventDetail/>} />
-            <Route path="/events/:eventId/editar" element={<EventForm/>} />
+            <Route path="/events" element={<EventList />} />
+            <Route path="/events/new" element={<EventForm />} />
+            <Route path="/events/:eventId" element={<EventDetail />} />
+            <Route path="/events/:eventId/editar" element={<EventForm />} />
+            <Route path="/" element={<CompraList />} />
+            <Route path="/compras/new" element={<CompraForm />} />
+            <Route path="/compras/:id/editar" element={<CompraForm />} />
+            <Route path="/compras/:id" element={<CompraDetail />} />
+
+
           </Routes>
         </div>
       </div>

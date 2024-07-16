@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getAllEvents, createEvent, getEventById, updateEvent, deleteEvent } from '../services/event.service';
 import { useParams, useNavigate } from 'react-router-dom';
+import { CompraDetail } from './Compra';
 
 // EventList component
 function EventList() {
   const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchEvents() {
@@ -29,6 +31,9 @@ function EventList() {
       console.error('Erro ao excluir evento:', error);
     }
   };
+  const handleCompra = async (eventId) => {
+    navigate(`/compras/new/${eventId}`);
+  };
 
   return (
     <div>
@@ -39,8 +44,10 @@ function EventList() {
           <li key={event.id_evento}>
             <strong>{event.name}</strong>
             <p>{event.descr}</p>
+            
             <a role="button" href={`/events/${event.id_evento}/editar`}>Editar</a>
             <button onClick={() => handleDelete(event.id_evento)}>Excluir</button>
+            <button onClick={handleCompra}>Comprar</button>
           </li>
         ))}
       </ul>
@@ -94,7 +101,7 @@ function EventForm({ onCreate, onUpdate }) {
       console.error('Erro ao salvar evento:', error);
     }
   };
-
+  
   useEffect(() => {
     async function fetchEvent() {
       try {
@@ -110,6 +117,8 @@ function EventForm({ onCreate, onUpdate }) {
       fetchEvent();
     }
   }, [eventId]);
+
+  
 
   return (
     <div>
